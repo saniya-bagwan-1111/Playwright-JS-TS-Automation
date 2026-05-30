@@ -2,8 +2,10 @@ import {expect, test} from "@playwright/test";
 
 test.only('E2E shopping Process',async({page})=>{
 
+    const email="SB@gmail.com";
+
     await page.goto("https://rahulshettyacademy.com/client/#/auth/login");
-    await page.locator("#userEmail").fill("SB@gmail.com");
+    await page.locator("#userEmail").fill(email);
     await page.locator("#userPassword").fill("saB#0808%TM");
     await page.locator("[type='submit']").click();
 
@@ -72,6 +74,50 @@ test.only('E2E shopping Process',async({page})=>{
             break;
         }
     }
+
+    const emailtext=page.locator(".user__name [type='text']").first();
+    expect(emailtext).toHaveText(email);
+
+    await page.locator(".action__submit").click();
+    
+    await expect(page.locator(".hero-primary")).toHaveText(" Thankyou for the order. ");
+
+    const order_id=await page.locator(".em-spacer-1 .ng-star-inserted").first().textContent();
+    console.log(order_id);
+
+    //check the order into Orders tab
+    await page.locator("[routerlink*='myorder']").first().click();
+
+    await page.locator("tbody").waitFor();
+    // const all_order_ids=await page.locator(".ng-star-inserted [scope='row']").allTextContents();
+
+    // console.log(all_order_ids);
+
+    // for(let i=0;i<all_order_ids.length;i++)
+    // {
+    //     if(all_order_ids[i] === order_id)
+    //     {
+    //         console.log("Oder present in orders")
+    //     }
+    // }
+
+    const rows =  page.locator("tbody tr");
+
+    for(let i=0; i< await rows.count();i++)
+    {
+        const roworderId=await rows.nth(i).locator("th").textContent();
+        // console.log(i,"-->",roworderId);
+        if(order_id.includes(roworderId))
+        {
+            // console.log("Order id found")
+            await rows.nth(i).locator(".btn-primary").click();
+            break;
+        }
+    }
+
+    const detailsOrderId=await page.locator(".col-text").textContent();
+    expect(order_id.includes(detailsOrderId)).toBeTruthy();
+
     // await page.pause();
 
 })
