@@ -1,5 +1,6 @@
 // @ts-check
 import { defineConfig, devices, expect } from '@playwright/test';
+import { trace } from 'node:console';
 import { TIMEOUT } from 'node:dns';
 
 /**
@@ -19,7 +20,9 @@ const Config=({//1 way
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     browserName:'firefox',
-    headless: false//npx playwright test --headed
+    headless: false,//npx playwright test --headed
+    trace: 'on',//for genertaing log, we an use value-on,off,retain-on-failure
+    screenshot:'on'
   },
 
   });
