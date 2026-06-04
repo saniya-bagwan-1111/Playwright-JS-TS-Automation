@@ -15,6 +15,15 @@ test.only('E2E shopping Process',async({page})=>{
     //another way- until loactor gets loaded wait for that locator, when mutiple elements found that time mostly it is used last used because till last eement gets loaded successful wit to execuste next step
     await page.locator(".card-body").last().waitFor();
 
+    //Block the images-api-here below code impg don't have api that is no chnage displayed to testing
+    await page.route("**/*{jpg,png,jpeg}",route=>{
+        route.abort();
+    })
+
+    //To see all request and response
+        await page.on('request',request=>console.log("Request url",request.url()));
+    await page.on('response',response=>console.log("Response URL",response.url()," Status Code",response.status()));
+
     // capturing all title of product
     const titles=await page.locator(".card-body h5").allTextContents();//if wait not added then it will return blank array
     // console.log(titles);
