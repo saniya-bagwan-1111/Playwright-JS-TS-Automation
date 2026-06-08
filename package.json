@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "npx playwright test ./tests/API_tests/WebAPI_sessionStorage.spec.js --headed"  
+    "test": "npx playwright test ./tests/API_tests/WebAPI_sessionStorage.spec.js --headed"
   },
   "keywords": [],
   "author": "",
@@ -12,5 +12,8 @@
   "devDependencies": {
     "@playwright/test": "^1.59.1",
     "@types/node": "^25.5.2"
+  },
+  "dependencies": {
+    "exceljs": "^4.4.0"
   }
 }
