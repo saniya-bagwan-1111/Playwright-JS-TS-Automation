@@ -23,3 +23,20 @@ use Ctrl+Shift+p
 "scripts": {
     "test": "npx playwright test filename.spec.js --headed"  
   },
+
+**MCP Server - Playwright Test agent**
+
+
+npx playwright init-agents --loop=vscode
+
+**What This Command Creates**
+
+When executed at your project root, the CLI creates a set of markdown-based agent configuration files (typically under **.github/chatmodes/, .github/agents/**, or an agents/ directory depending on your exact minor framework version):
+
+**playwright-test-planner.agent.md**: Instructions for the Planner Agent, which opens and explores your live app to generate a human-readable test plan (test-plan.md).
+
+**playwright-test-generator.agent.md**: Instructions for the Generator Agent, which transforms the structured markdown test plan into functional, runnable .spec.ts test files.
+
+**playwright-test-healer.agent.md**: Instructions for the Healer Agent, which auto-detects broken locators or layout changes upon test failure and automatically patches the code.
+
+**tests/seed.spec.ts**: A base seed file used to provide global fixtures, auth cookies, or shared landing pages to the agents so they start with proper application context.
